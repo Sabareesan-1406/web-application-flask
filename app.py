@@ -1,14 +1,25 @@
 import json
 import sqlite3
 
-from flask import Flask, Response, jsonify
+from api.route import apis
+from database.User import User
+from flask import Flask, Response, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+
+from database.connection import db
 
 app = Flask(__name__)
 
-db_connect = sqlite3.connect('database.db')
-db_connect.execute(
-    'CREATE TABLE IF NOT EXISTS Users (name TEXT, \
-    email TEXT, city TEXT, country TEXT, phone TEXT, age INTEGER)')
+# # option 1 : Database Connection Details - configured into flask app
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'zaq1xsw@'
+# app.config['MYSQL_DB'] = 'flask_app'
+
+# option 2 using connection string
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://usera:passw0rd@localhost:3306/flask_app'
+
+app.register_blueprint(apis, url_prefix="/api")
 
 
 # default landing
@@ -24,29 +35,6 @@ def about():
 
     response = Response(res, status=200)
     return response
-
-
-# default landing
-# @app.route('/api/user')
-# def user():
-#     res = {"name": "siva", "age": "40"}
-#
-#     response = jsonify(res)
-#     return response
-
-
-# default landing
-@app.route('/api/city')
-def city():
-    res = {"name": "pondicherry", "country": "india"}
-    jres = json.dumps(res)
-    response = Response(jres, mimetype="application/json", status=200)
-    return response
-
-
-@app.route('/api/user', methods=['POST', 'GET', 'DELETE'])
-def add_user():
-    return jsonify({"name": "siva", "age": "40"})
 
 
 app.run(port=5000, debug=True)
