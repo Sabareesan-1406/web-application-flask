@@ -1,4 +1,4 @@
-from database.connection import db
+from setup.database import db
 
 
 # Model is the definition of a table
