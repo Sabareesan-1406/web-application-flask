@@ -18,8 +18,6 @@ def initialize_logger(log_level="DEBUG",
     logging.basicConfig(level=log_level, format=log_format, handlers=[handler])
     logging.Formatter.converter = utc_time
 
-
-
 def utc_time(*args):
     """
     @param args:
