@@ -1,8 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import logging
 db = SQLAlchemy()
-
-
 def initialize_db(app):
     with app.app_context():
         try:

@@ -10,7 +10,7 @@ def initialize_logger(log_level="DEBUG",
     @param log_level:
     @param log_format:
     @return:
-    """
+    """ #loglevel
     # Setup logging
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter(log_format))
@@ -25,3 +25,4 @@ def utc_time(*args):
     """
     utc_dt = utc.localize(datetime.utcnow())
     return utc_dt.timetuple()
+
